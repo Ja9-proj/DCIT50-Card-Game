@@ -6,8 +6,9 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner in = new Scanner(System.in);
+
         Random random = new Random();
-        Player hero = new Player(100, 10);
+        Player hero = new Player("Akel", 100, 10);
         
         BattleEngine engine = new BattleEngine();
         Deck masterDeck = new Deck(engine);
