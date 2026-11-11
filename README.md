@@ -8,31 +8,41 @@ The features below may be assigned to group members for development.
 
 | Feature | Status | Developer |
 |---|---|---|
-| Stagger Meter | Planned | Unassigned |
-| Temporary Immunity After Rage Mode | Planned | Unassigned |
-| Boss Drop Rates and Loot System | Planned | Unassigned |
-| Loot Inventory | Planned | Unassigned |
-| Local File Storage | Planned | Unassigned |
+| Stagger Meter | In Progress | James |
+| Temporary Immunity After Rage Mode | In Progress | James |
+| Player Picks Card | In Progress | Van |
 | Multiple Bosses | Completed | Akel |
 
 ---
 
 ## Development Log
 
-### November 11-12, 2026
-
-**Developer:** Akel
+### November 12, 2026 — 3:00 AM | **Developer:** `Akel`
 
 #### Difficulty Selection
 
-Introduced a `Difficulty` enum to define the difficulty levels. Each level provides an immutable list of `Enemy` boss objects.
+Introduced a `Difficulty` enum to define the difficulty levels. Each level provides an immutable list of `Enemy` boss objects. This separates difficulty configuration from `Main`, replacing the three separate lists: `easyBosses`, `mediumBosses`, and `hardBosses`. Tingin ko, mas organized itong approach dahil nababawasan ang clutter sa `Main` at mas madaling i-maintain at i-extend ang difficulty options.
 
-This separates difficulty configuration from `Main`, replacing the three separate lists: `easyBosses`, `mediumBosses`, and `hardBosses`.
+#### Battle Engine
 
-Tingin ko, mas organized itong approach dahil nababawasan ang clutter sa `Main` at mas madaling i-maintain at i-extend ang difficulty options.
+Added the following methods:
 
-#### Main Class
+| Method | Purpose |
+|---|---|
+| `drawBoss()` | Randomly selects a boss from the chosen difficulty. |
+| `pause()` | Adds delays to improve the pacing and presentation of the terminal interface. Inshort kartehan haha |
 
-Kept changes to `Main` minimal to leave room for the group's upcoming implementations.
+The `pause()` method is complete and is intended for terminal presentation.
 
-Alam kong may idaragdag pa kayong features, kaya basic structure pa lang muna ang nilagay ko at
+#### Console Output Formatting
+
+Updated print statements to use formatted output `sotuf` for cleaner, more consistent terminal messages and shorter printing code.
+
+**Updated classes:**
+
+- `BuffCard`
+- `DemiCard`
+- `MagicCard`
+- `PhysicalCard`
+- `PureCard`
+- `BattleEngine`
