@@ -1,5 +1,6 @@
 import java.util.Random;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class BattleEngine {
@@ -14,7 +15,7 @@ public class BattleEngine {
         return hand;
     }
 
-    public Enemy drawBoss(ArrayList<Enemy> selectedBosses) {
+    public Enemy drawBoss(List<Enemy> selectedBosses) {
 
         int randomIndex = random.nextInt(selectedBosses.size());
         Enemy boss = selectedBosses.get(randomIndex);
