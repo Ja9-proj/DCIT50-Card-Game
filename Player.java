@@ -1,11 +1,12 @@
 
 public class Player {
+    private String name;
     private int hp;
     private int mana;
     private int maxHp = 100;
     private int maxMana = 10;
 
-    public Player(int hp, int mana) {
+    public Player(String name, int hp, int mana) {
 
         if (hp > maxHp || mana > maxMana) {
             throw new IllegalArgumentException("Hp or Mana Cannot exceed maxHp and maxMana");
@@ -14,12 +15,17 @@ public class Player {
         if (hp < 0 || mana < 0) {
             throw new IllegalArgumentException("Hp or Mana cannot be negative");
         }
+        this.name = name;
         this.hp = hp;
         this.mana = mana;
     }
 
     // getters
 
+    public String getName() {
+        return name;
+    }
+    
     public int getHp() {
         return hp;
     }
