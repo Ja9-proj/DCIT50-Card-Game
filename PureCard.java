@@ -22,8 +22,8 @@ public class PureCard extends Card{
             return;
         }
 
-         System.out.println("Player Cast " + super.getName() + " Dealt "  + damage + " to " + boss.getName());
-         System.out.println("Player took " + selfDamage + " self-damage.");
+         System.out.printf("%nPlayer Cast %s Dealt %d to %s", super.getName(), damage, boss.getName());
+         System.out.printf("%nPlayer took %d self-damage", selfDamage);
          player.spendMana(super.getManaCost());
          boss.takeDamage(damage);
          player.takeDamage(selfDamage);
@@ -33,10 +33,10 @@ public class PureCard extends Card{
     @Override
     public void printDetails() {
         System.out.println("------------ PURE CARD ------------");
-        System.out.println("Card: " + super.getName());
-        System.out.println("Mana Cost: " + super.getManaCost());
-        System.out.println("Damage: " + damage);
-        System.out.println("Self-Damage: " + selfDamage);
+        System.out.printf("%nCard: %s", super.getName());
+        System.out.printf("%nMana Cost: %d", super.getManaCost());
+        System.out.printf("%nDamage: %d", damage);
+        System.out.printf("%nSelf-Damage: %d", selfDamage);
         System.out.println("----------------------------------------");
     }
     

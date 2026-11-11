@@ -38,6 +38,13 @@ public class BattleEngine {
         }
     }
 
+    private void pause(int milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    } 
     public void executeTurn(Player player, Enemy boss, Deck masterDeck) {
 
         int bossStartingHP = boss.getHp();
@@ -47,31 +54,21 @@ public class BattleEngine {
         System.out.print("Searching for an oppenent");
 
         for (int i = 0; i < 3; i++) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
+            pause(1000);
             System.out.print(".");
         }
 
-        System.out.println("\nBOSS ENCOUNTERED: " + boss.getName());
-        System.out.println("HP: " + boss.getHp() + " | " + " Damage: " + boss.getDamage());
+        System.out.printf("%nBOSS ENCOUNTERED: %s", boss.getName());
+        System.out.printf("%nHP: %d | Damage: %d", boss.getHp(), boss.getDamage());
 
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        pause(2000);
 
         System.out.println("----- Boss Battle Begins -----");
-        System.out.println("Player | HP: " + player.getHp() + " | Mana: " + player.getMana());
-
+        System.out.printf("%nPlayer | HP: %d | Mana: %d", player.getHp(), player.getMana());
 
         while (player.getHp() > 0 && !boss.isDead()) {
 
-            System.out.println("===== TURN: " + turn + " =====");
+            System.out.printf("%n===== TURN %d =====%n", turn);
 
             if (turn > 1) {
                 drawHand(masterDeck, 3);
@@ -105,16 +102,16 @@ public class BattleEngine {
                 System.out.println("~~~ PLAYER LOSE ~~~");
             }
             System.out.println("Player Final Status");
-            System.out.println("HP: "+ player.getHp() + "/" + player.getMaxHp() + " | Mana: " + player.getMana() + "/" + player.getMaxMana());
-            System.out.println("Total Damage Taken: " + playerTotalDamageTaken);
+            System.out.printf("HP: %d/%d | Mana: %d/%d", player.getHp(), player.getMaxHp(), player.getMana(), player.getMaxMana());
+            System.out.printf("%nTotal Damage Taken: %d", playerTotalDamageTaken);
 
             if (player.getHp() == 0 && !boss.isDead()) {
                 System.out.println("\n~~~ BOSS WINS ~~~");
             } else {
                 System.out.println("\n~~~ BOSS LOSE ~~~");
             }
-            System.out.println(boss.getName() + " Final Status");
-            System.out.println("HP: " + boss.getHp() + "/" + boss.getMaxHp());
+            System.out.printf("%s Final Status", boss.getName());
+            System.out.printf("%nHP: %s/%s %n", boss.getHp(), boss.getMaxHp());
             System.out.println("Total Damage Taken: " + (bossStartingHP - boss.getHp()));
         
     }
