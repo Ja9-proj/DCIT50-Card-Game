@@ -24,7 +24,7 @@ public class BuffCard extends Card {
             return;
         }
 
-        System.out.println("Player " + super.getName() + " MaxHP "  + player.getMaxHp() + " increase to +" + hpBoost);
+        System.out.printf("%nPlayer MaxHP %d increase to +%d", player.getMaxHp(), hpBoost);
         player.setMaxHp(hpBoost);
         player.spendMana(super.getManaCost());
         
@@ -44,17 +44,17 @@ public class BuffCard extends Card {
 
             currentCard.setManaCost(newCost);
 
-            System.out.println(currentCard.getName() + ": " + oldCost + " -> " + newCost);
+            System.out.printf("%n%s : %d -> %d", currentCard.getName(), oldCost, newCost);
         }
     }
 
     @Override
     public void printDetails() {
         System.out.println("------------ BUFF CARD ------------");
-        System.out.println("Card: " + super.getName());
-        System.out.println("Mana Cost: " + super.getManaCost());
-        System.out.println("HP Boost: " + hpBoost);
-        System.out.println("Mana Cost Reduction: " + manaReduction);
+        System.out.printf("%nCard %s", super.getName());
+        System.out.printf("%nMana Cost: %d", super.getManaCost());
+        System.out.printf("%nHP Boost:  %d", hpBoost);
+        System.out.printf("%nMana Cost Reduction: %d", manaReduction);
         System.out.println("----------------------------------------");
     }
 
