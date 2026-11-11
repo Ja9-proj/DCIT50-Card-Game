@@ -29,7 +29,7 @@ public class DemiCard extends Card {
         System.out.println("------------ DEMI CARD ------------");
         System.out.printf("%nCard %s", super.getName());
         System.out.printf("%nMana Cost: %d", super.getManaCost());
-        System.out.printf("%nDamage: %d%%", damage);
+        System.out.printf("%nDamage: %.0f%%", damage);
         System.out.println("----------------------------------------");
     }
 

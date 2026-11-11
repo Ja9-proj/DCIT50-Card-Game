@@ -63,8 +63,7 @@ public class Enemy {
 
     public void rageMode() {
         if (hp <= 0.25 * maxHp && !isActivated && !isDead()) {
-            System.out.println("\n------- RAGE MODE -------");
-            this.name = "RAGE MODE: " + name;
+            System.out.println("\n========= RAGE MODE ===========");
             this.damage = 2 * damage;
             isActivated = true;
         }
