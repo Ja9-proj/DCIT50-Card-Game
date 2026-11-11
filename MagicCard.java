@@ -20,11 +20,9 @@ public class MagicCard extends Card {
             return;
         }
 
-
-
-         System.out.println("Player Cast " + super.getName() + " Dealt "  + damage + " to " + boss.getName());
-         System.out.println("Healed player by " + healAmount + " HP");
-         System.out.println("Restored " + manaRestore + " mana.");
+         System.out.print("Player Cast %s Dealt %d to %s", super.getName(), damage, boss.getName());
+         System.out.printf("Healed player by %d HP", healAmount);
+         System.out.println("Restored %d Mana.", manaRestore);
          player.spendMana(super.getManaCost());
          boss.takeDamage(damage);
          player.heal(healAmount);
@@ -36,11 +34,11 @@ public class MagicCard extends Card {
     @Override
     public void printDetails() {
         System.out.println("------------ MAGIC CARD ------------");
-        System.out.println("Card: " + super.getName());
-        System.out.println("Mana Cost: " + super.getManaCost());
-        System.out.println("Damage: " + damage);
-        System.out.println("Heal:" + healAmount);
-        System.out.println("Restored: " + manaRestore);
+        System.out.printf("%nCard %s", super.getName());
+        System.out.printf("%nMana Cost: %d", super.getManaCost());
+        System.out.printf("%nDamage: %d", damage);
+        System.out.printf("%nHeal: %d", healAmount);
+        System.out.printf("%nRestored: %d", manaRestore);
         System.out.println("----------------------------------------");
     }
 }
