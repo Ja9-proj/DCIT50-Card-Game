@@ -51,10 +51,10 @@ public class BuffCard extends Card {
     @Override
     public void printDetails() {
         System.out.println("------------ BUFF CARD ------------");
-        System.out.printf("Card %s", super.getName());
-        System.out.printf("Mana Cost: %d", super.getManaCost());
-        System.out.printf("HP Boost:  %d", hpBoost);
-        System.out.printf("Mana Cost Reduction: %d", manaReduction);
+        System.out.printf("%nCard %s", super.getName());
+        System.out.printf("%nMana Cost: %d", super.getManaCost());
+        System.out.printf("%nHP Boost:  %d", hpBoost);
+        System.out.printf("%nMana Cost Reduction: %d", manaReduction);
         System.out.println("----------------------------------------");
     }
 
