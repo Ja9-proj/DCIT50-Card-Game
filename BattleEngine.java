@@ -101,7 +101,7 @@ public class BattleEngine {
             } else {
                 System.out.println("~~~ PLAYER LOSE ~~~");
             }
-            System.out.println("Player Final Status");
+            System.out.printf("$s Final Status", player.getName());
             System.out.printf("HP: %d/%d | Mana: %d/%d", player.getHp(), player.getMaxHp(), player.getMana(), player.getMaxMana());
             System.out.printf("%nTotal Damage Taken: %d", playerTotalDamageTaken);
 
