@@ -11,10 +11,13 @@ public class Main {
         ArrayList<Enemy> easyBosses = new ArrayList<>();
         ArrayList<Enemy> mediumBosses = new ArrayList<>();
         ArrayList<Enemy> hardBosses = new ArrayList<>();
-
-        ArrayList<Enemy> selectedBosses = null;
         
+        ArrayList<Enemy> selectedBosses = null;
+        Enemy boss = null;
         Player hero = new Player(100, 10);
+        
+        BattleEngine engine = new BattleEngine();
+        Deck masterDeck = new Deck(engine);
 
         easyBosses.add(new Enemy("Goblin King", 70, 3));
         easyBosses.add(new Enemy("Cave Spider", 75, 3));
@@ -34,8 +37,6 @@ public class Main {
         hardBosses.add(new Enemy("Death Bringer", 155, 8));
         hardBosses.add(new Enemy("Badong the Great", 169, 10));
 
-        BattleEngine engine = new BattleEngine();
-        Deck masterDeck = new Deck(engine);
 
         
         System.out.println("====== CARD BATTLE ======");
@@ -57,12 +58,15 @@ public class Main {
                 switch (difficulty) {
                     case 1:
                         selectedBosses = easyBosses;
+                        boss = engine.drawBoss(selectedBosses);
                         break;
                     case 2:
                         selectedBosses = mediumBosses;
+                        boss = engine.drawBoss(selectedBosses);
                         break;
                     case 3:
                         selectedBosses = hardBosses;
+                        boss = engine.drawBoss(selectedBosses);
                         break;
                     default:
                         System.out.println("Invalid Input!");
@@ -77,14 +81,10 @@ public class Main {
             return;
         }
 
-            if (selectedBosses == null) {
+            if (selectedBosses == null || boss == null) {
                 System.out.println("No boss Found!");
                 return;
             }
-            
-            int randomIndex = random.nextInt(selectedBosses.size());
-            Enemy boss = selectedBosses.get(randomIndex);
-
 
             engine.drawHand(masterDeck, 4);
             engine.executeTurn(hero, boss, masterDeck);
