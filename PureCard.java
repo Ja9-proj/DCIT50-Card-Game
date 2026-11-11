@@ -23,7 +23,7 @@ public class PureCard extends Card{
         }
 
          System.out.print("%nPlayer Cast %s Dealt %d to %s", super.getName(), damage, boss.getName());
-         System.out.printf("Player took %d self-damage", selfDamage);
+         System.out.printf("%nPlayer took %d self-damage", selfDamage);
          player.spendMana(super.getManaCost());
          boss.takeDamage(damage);
          player.takeDamage(selfDamage);
