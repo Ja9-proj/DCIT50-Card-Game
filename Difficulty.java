@@ -7,6 +7,8 @@ public enum Difficulty {
 
     public List<Enemy> getBosses() {
 
+        // this keyword is pertaining to the current object that calls it.
+        // 3 objects in this class EASY, MEDIUM, HARD.
         switch (this) {
             case EASY:
                 return List.of(
