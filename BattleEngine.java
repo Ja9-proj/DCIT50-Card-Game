@@ -1,8 +1,10 @@
-import java.util.*;
+import java.util.Random;
+import java.util.ArrayList;
 
 
 public class BattleEngine {
     private ArrayList<Card> hand;
+    private Random random = new Random();
 
     public BattleEngine(){
         this.hand = new ArrayList<>();
@@ -12,6 +14,13 @@ public class BattleEngine {
         return hand;
     }
 
+    public Enemy drawBoss(ArrayList<Enemy> selectedBosses) {
+
+        int randomIndex = random.nextInt(selectedBosses.size());
+        Enemy boss = selectedBosses.get(randomIndex);
+
+        return boss;
+    }
     public void drawHand(Deck deck, int numberOfCards) {
         
         for (int i = 0; i < numberOfCards; i++) {
@@ -88,13 +97,6 @@ public class BattleEngine {
         }
 
             System.out.println("\n------------ BATTLE FINISHED ------------");
-            
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
             if (player.getHp() > 0 && boss.isDead()) {
                 System.out.println("~~~ PLAYER WINS ~~~");
             } else {
