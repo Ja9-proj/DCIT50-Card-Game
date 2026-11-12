@@ -20,7 +20,7 @@ public class DemiCard extends Card {
         player.spendMana(super.getManaCost());
         boss.takeDamage(finalDamage);
 
-        System.out.printf("%s Cast %s Dealt %d percent to %s",player.getName(), super.getName(), finalDamage, boss.getName());
+        System.out.printf("%s Cast %s Dealt %.0f%% of current HP (%d HP) to %s%n", player.getName(), super.getName(), damage, finalDamage, boss.getName());
 
     }
 

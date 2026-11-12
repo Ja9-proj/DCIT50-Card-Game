@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.ArrayList;
 
 
 public class BuffCard extends Card {
@@ -30,14 +31,16 @@ public class BuffCard extends Card {
         
         if (manaReduction > 0) {
 
-            if (battleEngine.getHand().isEmpty()) {
-                System.out.println("No Card left to reduce!");
+            ArrayList<Card> eligibleCards = new ArrayList<>(battleEngine.getHand());
+            eligibleCards.remove(this);
+
+            if (eligibleCards.isEmpty()) {
+                System.out.println("No other card left to reduce!");
                 return;
             }
 
-            int randomIndex = random.nextInt(battleEngine.getHand().size());
-            
-            Card currentCard = battleEngine.getHand().get(randomIndex);
+            int randomIndex = random.nextInt(eligibleCards.size());
+            Card currentCard = eligibleCards.get(randomIndex);
 
             int oldCost = currentCard.getManaCost();
             int newCost = Math.max(0, currentCard.getManaCost() - manaReduction);

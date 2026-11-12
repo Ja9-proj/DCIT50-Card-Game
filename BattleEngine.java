@@ -92,9 +92,17 @@ public class BattleEngine {
             boolean endTurn = false;
             if(choice.equalsIgnoreCase("h")) {
                 System.out.println("Which card to check?: ");
-                int stats = inpt.nextInt();
-                hand.get(stats-1).printDetails();
-                inpt.nextLine();
+                String statsInput = inpt.nextLine().strip();
+                try {
+                    int stats = Integer.parseInt(statsInput);
+                    if (stats >= 1 && stats <= hand.size()) {
+                        hand.get(stats - 1).printDetails();
+                    } else {
+                        System.out.println("Invalid card number!");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Please enter a valid card number!");
+                }
             }
             else if(choice.equalsIgnoreCase("a")) {
                 for(Card cards : hand) {
@@ -108,51 +116,47 @@ public class BattleEngine {
             }
                 try{
                 int cardChoice = Integer.parseInt(choice);
-                endTurn = true;
                 if(cardChoice > 0 && cardChoice <= hand.size()) {
+                    endTurn = true;
                     int card = cardChoice-1;
                     hand.get(card).play(player,boss);
                     hand.remove(card);
+                } else {
+                    System.out.println("Invalid card number!");
                 }
             }
             catch (NumberFormatException e) {
                 if (!choice.equalsIgnoreCase("h") && !choice.equalsIgnoreCase("a")
-                && !choice.equalsIgnoreCase("s") && !choice.equalsIgnoreCase("e")) {
+                && !choice.equalsIgnoreCase("e")) {
                     System.out.println("Invalid Input");
                 }
             }
             if (endTurn && hand.isEmpty()) {
-                turn++;
                 if (!boss.isDead() && player.getHp() > 0) {
-                    boss.rageMode();
-
                     int hpBeforeAttack = player.getHp();
                     boss.isInflicted();
+                    boss.rageMode();
                     if (!boss.isDead()) {
                         boss.attack(player);
                     }
                     playerTotalDamageTaken += hpBeforeAttack - player.getHp();
                 }
+                turn++;
             }
         }
 
             System.out.println("\n------------ BATTLE FINISHED ------------");
-            if (masterDeck.getCardPool().isEmpty()) {
+            if (!boss.isDead() && player.getHp() > 0 && masterDeck.getCardPool().isEmpty() && hand.isEmpty()) {
                 System.out.println("~~~ INSUFFICIENT CARDS TO PULL ~~~");
             }
-            if (player.getHp() > 0 && boss.isDead()) {
-                System.out.printf("~~~ %s WINS ~~~%n", player.getName());
-            } else {
-                System.out.printf("~~~ %s LOSE ~~~%n", player.getName());
-            }
-            System.out.printf("%s Final Status", player.getName());
-            System.out.printf("%nHP: %d/%d | Mana: %d/%d", player.getHp(), player.getMaxHp(), player.getMana(), player.getMaxMana());
-            System.out.printf("%nTotal Damage Taken: %d", playerTotalDamageTaken);
+            System.out.printf("%n%s Final Status%n", player.getName());
+            System.out.printf("HP: %d/%d | Mana: %d/%d", player.getHp(), player.getMaxHp(), player.getMana(), player.getMaxMana());
+            System.out.printf("%nTotal Damage Taken: %d%n", playerTotalDamageTaken);
 
-            if (player.getHp() == 0 && !boss.isDead() || masterDeck.getCardPool().isEmpty()) {
-                System.out.printf("%n~~~ %s WINS ~~~%n", boss.getName());
-            } else {
+            if (boss.isDead()) {
                 System.out.printf("%n~~~ %s LOSE ~~~%n", boss.getName());
+            } else {
+                System.out.printf("%n~~~ %s WINS ~~~%n", boss.getName());
             }
             System.out.printf("%s Final Status", boss.getName());
             System.out.printf("%nHP: %s/%s %n", boss.getHp(), boss.getMaxHp());
