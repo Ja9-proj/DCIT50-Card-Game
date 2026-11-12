@@ -8,9 +8,9 @@ The features below may be assigned to group members for development.
 
 | Feature | Status | Developer |
 |---|---|---|
-| Stagger Meter | In Progress | James |
-| Temporary Immunity After Rage Mode | In Progress | James |
-| Player Picks Card | In Progress | Van |
+| Stagger Meter | Completed/Can't Merge | James |
+| Temporary Immunity After Rage Mode | Postponed | James |
+| Player Picks Card | Completed | Van |
 | Multiple Bosses | Completed | Akel |
 | Character Classes | Completed | Loui-3 |
 
