@@ -21,7 +21,7 @@ public class MagicCard extends Card {
         }
 
          System.out.printf("%s Cast %s Dealt %d to %s",player.getName(), super.getName(), damage, boss.getName());
-         System.out.printf("%nHealed player by %d HP", healAmount);
+         System.out.printf("%nHealed %s by %d HP",player.getName(), healAmount);
          System.out.printf("%nRestored %d Mana.%n", manaRestore);
          player.spendMana(super.getManaCost());
          boss.takeDamage(damage);

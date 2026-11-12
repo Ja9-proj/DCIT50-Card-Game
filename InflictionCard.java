@@ -14,7 +14,7 @@ public class InflictionCard extends Card{
         }
         player.spendMana(getManaCost());
         boss.applyInflictDmg(damage, inflictTurn);
-        System.out.printf("Player Cast %s Inflicted %d Damage to %s%n", super.getName(), damage, boss.getName());
+        System.out.printf("%s Cast %s Inflicted %d Damage to %s%n",player.getName(), super.getName(), damage, boss.getName());
         System.out.printf("Inflict Duration: %d%n", inflictTurn);
     }
     @Override

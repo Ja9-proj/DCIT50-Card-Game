@@ -3,7 +3,6 @@ import java.util.*;
 public class Deck {
     private ArrayList<Card> cardPool;
     private Random randomGenerator;
-
     public ArrayList<Card> getCardPool() {
         return cardPool;
     }
@@ -23,7 +22,7 @@ public class Deck {
         cardPool.add(new MagicCard("Shallow Grave", 5, 0, 30, 0));
         cardPool.add(new MagicCard("Finger of Death", 10, 25, 0, 0));
         cardPool.add(new MagicCard("Mystic Snake", 2, 15, 15, 0));
-        
+
         cardPool.add(new PureCard("Wild Axes", 5, 15, 0));
         cardPool.add(new PureCard("Consume", 5, 40, 25));
         cardPool.add(new PureCard("Purifying Flames", 3, 50, 35));
