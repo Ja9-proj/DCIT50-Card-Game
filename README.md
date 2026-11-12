@@ -8,10 +8,11 @@ The features below may be assigned to group members for development.
 
 | Feature | Status | Developer |
 |---|---|---|
-| Stagger Meter | Completed/C-Merge | James |
+| Stagger Meter | Completed/Can't Merge | James |
 | Temporary Immunity After Rage Mode | Postponed | James |
 | Player Picks Card | Completed | Van |
 | Multiple Bosses | Completed | Akel |
+| Character Classes | Completed | Loui-3 |
 
 ---
 
@@ -47,41 +48,103 @@ Updated print statements to use formatted output `sotuf` for cleaner, more consi
 - `PureCard`
 - `BattleEngine`
 
-## Development Log
 
-### November 12, 2026 — 12:45 PM | **Developer:** `JAMES`
+### November 13, 2026 — 7:31 AM | **Developer:** `Von`
 
-#### Boss Stagger / Stun Meter
+#### Player Input Selection
 
-Introduced a `Stagger Meter`. Where some `Card Type` can inflict Stagger Damage that affects the boss `Stagger Meter`. `Magic Card`, `Physical Card`, `Demi Card` are the Card type that are affected and each card a has a unique and different stagger damage. When the Stagger Meter is Full the next Card that will be Drawn can deal 20 pts of extra damage. Addition is that when the boss is stagger it cannot deal damage to the player.
+Introduced Player `input` feature in `BattleEngine` to give players the freedom to choose which card to play first when they end their turn. This eliminates the automatic sequence of cards being dealt every turn, making the gameplay more immersive than before. The sequence of turns now goes as follows:
 
-#### Enemy Class
+1. Player picks a card from the hand.
+2. Card then applies its given attributes.
+3. (Player turn loops until their hand is now empty)
+4. Boss attacks Player.
+5. Player replenishes hand with new cards after a turn.
 
-Added the following methods and Attributes:
+The input feature is using the pre-existing `Scanner` method in `Main` to avoid instantiating duplicates inside the package. Scanner instantiation was obviously changed from inside of `Main` class to outside and made it `private`. 
+
+Also added a list of options in `BattleEngine` for players to choose:
+- `List of Cards`
+- `'h' to show specific card stats`
+- `'a' to show all card stats`
+- `'s' to show match status`
+
+#### Main
+
+Added following methods:
 
 | Method | Purpose |
 |---|---|
-| `takeDamage1()` | An additional helper method for the original takeDamage() method |
-| `takeDamage()` | The method that analyze if it should apply the extra damage from, the stagger meter if its full or not |
-| `endTurn()` | Checks out the current status of boss if its gonna skip and turns the stagger meter back to zero after being full |
-| `addStaggerPTS()` | A method that add stagger damage to the stagger meter when the specific card is being drawn |
-| `int getMaxStagger()` | Max Stagger Getter (Pre-Defined/ Changeable) |
-| `int getStaggerMeter()` | Stagger Meter Getter |
-| `int getBonusDamage()` | Extra Damage Getter |
-| `int MaxStagger` | Attribute Enemy |
-| `int staggerMeter` | Attribute Enemy |
-| `int staggerTurns` | Attribute Enemy |
-| `int bonusdamage` | Attribute Enemy |
-| `boolean skipturn` | Attribute Enemy |
-| `int Stagger Filler` | Attribute Added to the Card Types mentioned |
+| `startGame(BattleEngine engine,Player hero, Enemy boss, Deck masterDeck, Scanner in)` | Basically separates the `executeTurn` from `main` method to all the parameters that are needed for the `executeTurn` to work. |
 
-#### Classes Affected
+--------------------------------
 
-- `DemiCard`
-- `PhysicalCard`
-- `MagicCard`
-- `Enemy`
+#### New "Damage Infliction" Card
+
+Introduced a new card type that deals damage to the enemy with every turn that they do. After the player plays one, the effect deals damage before the boss attacks and its duration decreases each turn.
+
+Added five infliction cards to the deck:
+- `Venomous Bite`
+- `Burning Mark`
+- `Frostbite`
+- `Cursed Wound`
+- `Plague Strike`
+
+#### Enemy
+
+| Method | Purpose |
+|---|---|
+| `applyInflictDmg(int damage, int duration)` | Sets the damage and duration of the effect on the boss. |
+| `isInflicted() ` | Infliction Checker. Deals the effect’s damage to the boss and decreases its remaining duration. |
+
+
+**Updated classes:**
+
+- `Main`
 - `BattleEngine`
+- `Enemy`
+- `Deck`
+- `InflictionCard` (Newly Added)
 
+### November 12, 2026 - 3:05 PM | **Developer:** `loui-3`
 
+#### Character Classes
 
+Added Mage, Wizard, and Archmage as selectable character classes before
+difficulty selection. Choosing a class determines the player's starting and
+maximum health and mana:
+
+| Class | Starting/Maximum HP | Starting/Maximum Mana | Playstyle |
+|---|---:|---:|---|
+| Mage | 100 | 12 | Higher health provides more room to withstand boss attacks. |
+| Wizard | 90 | 15 | A balanced option with moderate health and mana. |
+| Archmage | 80 | 20 | Higher mana supports more mana-costly card plays, with less health as a trade-off. |
+
+These are stat-based differences; the classes do not currently have unique
+abilities or class-specific cards. The chosen class and its starting stats are
+shown before the battle. This gives players a meaningful choice of resource
+balance before they select a difficulty.
+
+### November 12, 2026 | **Developer:** `Loui-3`
+
+#### Boss Selection Mode
+
+Added **Selection Mode** as a separate main-menu option. Both modes first ask
+the player to choose Mage, Wizard, or Archmage.
+
+**Start Game** keeps the existing flow: the player chooses Easy, Medium, or
+Hard, then the game randomly selects an opponent from that difficulty. The new
+**Selection Mode** skips the difficulty prompt and lets the player choose an
+opponent directly.
+
+The selection list is assembled from the boss lists in `Difficulty`, in Easy,
+Medium, then Hard order. It contains all 15 current bosses, numbered
+consecutively. Each entry displays the boss name, difficulty, HP, and damage.
+The player enters a list number to select that exact boss; the selected `Enemy`
+is then passed to the existing battle-start flow rather than being randomly
+drawn.
+
+The choice is checked against the list's valid number range. Non-numeric or
+out-of-range input is rejected, and no battle starts unless a valid boss was
+selected. This keeps the original random mode intact while providing a direct
+way to test against a particular boss.
