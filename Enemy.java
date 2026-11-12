@@ -57,7 +57,7 @@ public class Enemy {
 
         p.takeDamage(damage);
 
-        System.out.println(name + " Dealt " + damage + " to player");
+        System.out.println(name + " Dealt " + damage + " to " + p.getName());
     }
     // ADDED INFLICTION DAMAGE FEATURE
     public void applyInflictDmg(int damage, int duration) {
