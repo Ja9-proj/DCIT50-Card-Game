@@ -59,22 +59,20 @@ public class BattleEngine {
         }
 
         System.out.printf("%nBOSS ENCOUNTERED: %s", boss.getName());
-        System.out.printf("%nHP: %d | Damage: %d", boss.getHp(), boss.getDamage());
+        System.out.printf("%nHP: %d | Damage: %d%n", boss.getHp(), boss.getDamage());
 
         pause(2000);
 
-        System.out.println("----- Boss Battle Begins -----");
-        System.out.printf("%nPlayer | HP: %d | Mana: %d", player.getHp(), player.getMana());
+        System.out.print("----- Boss Battle Begins -----");
+        System.out.printf("%nPlayer | HP: %d | Mana: %d%n", player.getHp(), player.getMana());
 
         while (player.getHp() > 0 && !boss.isDead()) {
-
-            System.out.printf("%n===== TURN %d =====%n", turn);
 
             if (turn > 1 && hand.isEmpty()) {
                 drawHand(masterDeck, 3);
             }
-            System.out.printf("===== TURN: %d =====", turn);
-            System.out.printf("===== CURRENT HAND =====");
+            System.out.printf("%n===== TURN: %d =====%n", turn);
+            System.out.println("===== CURRENT HAND =====");
             for (int i = 0; i < hand.size(); i++) {
                 System.out.printf("%d.) %s%n", i + 1, hand.get(i).getName());
             }
