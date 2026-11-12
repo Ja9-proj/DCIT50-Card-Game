@@ -12,6 +12,7 @@ The features below may be assigned to group members for development.
 | Temporary Immunity After Rage Mode | In Progress | James |
 | Player Picks Card | In Progress | Van |
 | Multiple Bosses | Completed | Akel |
+| Character Classes | Completed | Loui-3 |
 
 ---
 
@@ -46,6 +47,7 @@ Updated print statements to use formatted output `sotuf` for cleaner, more consi
 - `PhysicalCard`
 - `PureCard`
 - `BattleEngine`
+
 
 ### November 13, 2026 — 7:31 AM | **Developer:** `Von`
 
@@ -103,3 +105,46 @@ Added five infliction cards to the deck:
 - `Enemy`
 - `Deck`
 - `InflictionCard` (Newly Added)
+
+### November 12, 2026 - 3:05 PM | **Developer:** `loui-3`
+
+#### Character Classes
+
+Added Mage, Wizard, and Archmage as selectable character classes before
+difficulty selection. Choosing a class determines the player's starting and
+maximum health and mana:
+
+| Class | Starting/Maximum HP | Starting/Maximum Mana | Playstyle |
+|---|---:|---:|---|
+| Mage | 100 | 12 | Higher health provides more room to withstand boss attacks. |
+| Wizard | 90 | 15 | A balanced option with moderate health and mana. |
+| Archmage | 80 | 20 | Higher mana supports more mana-costly card plays, with less health as a trade-off. |
+
+These are stat-based differences; the classes do not currently have unique
+abilities or class-specific cards. The chosen class and its starting stats are
+shown before the battle. This gives players a meaningful choice of resource
+balance before they select a difficulty.
+
+### November 12, 2026 | **Developer:** `Loui-3`
+
+#### Boss Selection Mode
+
+Added **Selection Mode** as a separate main-menu option. Both modes first ask
+the player to choose Mage, Wizard, or Archmage.
+
+**Start Game** keeps the existing flow: the player chooses Easy, Medium, or
+Hard, then the game randomly selects an opponent from that difficulty. The new
+**Selection Mode** skips the difficulty prompt and lets the player choose an
+opponent directly.
+
+The selection list is assembled from the boss lists in `Difficulty`, in Easy,
+Medium, then Hard order. It contains all 15 current bosses, numbered
+consecutively. Each entry displays the boss name, difficulty, HP, and damage.
+The player enters a list number to select that exact boss; the selected `Enemy`
+is then passed to the existing battle-start flow rather than being randomly
+drawn.
+
+The choice is checked against the list's valid number range. Non-numeric or
+out-of-range input is rejected, and no battle starts unless a valid boss was
+selected. This keeps the original random mode intact while providing a direct
+way to test against a particular boss.
