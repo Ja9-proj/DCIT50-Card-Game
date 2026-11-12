@@ -12,6 +12,7 @@ The features below may be assigned to group members for development.
 | Temporary Immunity After Rage Mode | In Progress | James |
 | Player Picks Card | In Progress | Van |
 | Multiple Bosses | Completed | Akel |
+| Character Classes | Completed | Loui-3 |
 
 ---
 
@@ -46,3 +47,22 @@ Updated print statements to use formatted output `sotuf` for cleaner, more consi
 - `PhysicalCard`
 - `PureCard`
 - `BattleEngine`
+
+### November 12, 2026 | **Developer:** `loui-3`
+
+#### Character Classes
+
+Added Mage, Wizard, and Archmage as selectable character classes before
+difficulty selection. Choosing a class determines the player's starting and
+maximum health and mana:
+
+| Class | Starting/Maximum HP | Starting/Maximum Mana | Playstyle |
+|---|---:|---:|---|
+| Mage | 100 | 12 | Higher health provides more room to withstand boss attacks. |
+| Wizard | 90 | 15 | A balanced option with moderate health and mana. |
+| Archmage | 80 | 20 | Higher mana supports more mana-costly card plays, with less health as a trade-off. |
+
+These are stat-based differences; the classes do not currently have unique
+abilities or class-specific cards. The chosen class and its starting stats are
+shown before the battle. This gives players a meaningful choice of resource
+balance before they select a difficulty.

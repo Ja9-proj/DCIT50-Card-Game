@@ -1,18 +1,14 @@
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Random;
 
 public class Main {
     private static final Scanner in = new Scanner(System.in);
     public static void main(String[] args) {
 
-        Random random = new Random();
-        Player hero = new Player("Akel", 100, 10);
-        
         BattleEngine engine = new BattleEngine();
         Deck masterDeck = new Deck(engine);
         Difficulty difficulty = null;
         Enemy boss = null;
+        Player hero;
 
         
             System.out.println("====== CARD BATTLE ======");
@@ -23,6 +19,30 @@ public class Main {
 
             switch (menu) {
                 case "1":
+                    System.out.println("====== SELECT CLASS ======");
+                    System.out.println("1. Mage     (100 HP, 12 Mana)");
+                    System.out.println("2. Wizard   (90 HP, 15 Mana)");
+                    System.out.println("3. Archmage (80 HP, 20 Mana)");
+                    System.out.print("Choose: ");
+                    String classChoice = in.nextLine().strip();
+                    CharacterClass characterClass;
+
+                    switch (classChoice) {
+                        case "1":
+                            characterClass = CharacterClass.MAGE;
+                            break;
+                        case "2":
+                            characterClass = CharacterClass.WIZARD;
+                            break;
+                        case "3":
+                            characterClass = CharacterClass.ARCHMAGE;
+                            break;
+                        default:
+                            System.out.println("Invalid Input!");
+                            return;
+                    }
+                    hero = new Player("Player", characterClass);
+
                     System.out.println("====== SELECT DIFFICULTY ======");
                     System.out.println("1. Easy");
                     System.out.println("2. Medium");
@@ -64,6 +84,8 @@ public class Main {
     }
 
     public static void startGame(BattleEngine engine,Player hero, Enemy boss, Deck masterDeck, Scanner in) {
+        System.out.printf("Class: %s | HP: %d | Mana: %d%n",
+                hero.getClassName(), hero.getHp(), hero.getMana());
         if (!boss.isDead()) {
             engine.drawHand(masterDeck, 4);
             engine.executeTurn(hero, boss, masterDeck, in);
