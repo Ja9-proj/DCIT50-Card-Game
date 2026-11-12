@@ -3,11 +3,9 @@ import java.util.Scanner;
 import java.util.Random;
 
 public class Main {
+    private static final Scanner in = new Scanner(System.in);
     public static void main(String[] args) {
-
-        Scanner in = new Scanner(System.in);
         Random random = new Random();
-
         ArrayList<Enemy> easyBosses = new ArrayList<>();
         ArrayList<Enemy> mediumBosses = new ArrayList<>();
         ArrayList<Enemy> hardBosses = new ArrayList<>();
@@ -80,13 +78,17 @@ public class Main {
             System.out.println("Invalid input!");
             return;
         }
-
             if (selectedBosses == null || boss == null) {
                 System.out.println("No boss Found!");
                 return;
             }
+            startGame(engine,hero,boss,masterDeck, in); // used a static method for player input
+    }
 
+    public static void startGame(BattleEngine engine,Player hero, Enemy boss, Deck masterDeck, Scanner in) {
+        if (!boss.isDead()) {
             engine.drawHand(masterDeck, 4);
-            engine.executeTurn(hero, boss, masterDeck);
+            engine.executeTurn(hero, boss, masterDeck, in);
+        }
     }
 }

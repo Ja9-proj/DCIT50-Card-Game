@@ -5,9 +5,9 @@ public class Enemy {
     private int damage;
     private int maxHp;
     private boolean isActivated = false;
-
+    private int turns;
+    private int inflictDamage;
     public Enemy(String name, int hp, int damage) {
-
         if (hp <= 0) {
             throw new IllegalArgumentException("Enemy hp must not be negative or zero");
         }   
@@ -15,7 +15,6 @@ public class Enemy {
         if (damage <= 0) {
             throw new IllegalArgumentException("Enemy damage must not be negative or zero");
         }
-
         this.name = name;
         this.hp = hp;
         this.damage = damage;
@@ -23,7 +22,7 @@ public class Enemy {
     }
 
     // getters
-
+    public int getTurns() {return turns; }
     public String getName(){
         return name;
     }
@@ -59,6 +58,18 @@ public class Enemy {
         p.takeDamage(damage);
 
         System.out.println(name + " Dealt " + damage + " to player");
+    }
+    // ADDED INFLICTION DAMAGE FEATURE
+    public void applyInflictDmg(int damage, int duration) {
+        this.inflictDamage = damage;
+        this.turns = duration;
+    }
+    public void isInflicted() {
+        if (turns > 0) {
+            System.out.println(getName() + " gets inflicted " + inflictDamage + " damage");
+            takeDamage(inflictDamage);
+            turns--;
+        }
     }
 
     public void rageMode() {
