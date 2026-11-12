@@ -124,3 +124,27 @@ These are stat-based differences; the classes do not currently have unique
 abilities or class-specific cards. The chosen class and its starting stats are
 shown before the battle. This gives players a meaningful choice of resource
 balance before they select a difficulty.
+
+### November 12, 2026 | **Developer:** `Loui-3`
+
+#### Boss Selection Mode
+
+Added **Selection Mode** as a separate main-menu option. Both modes first ask
+the player to choose Mage, Wizard, or Archmage.
+
+**Start Game** keeps the existing flow: the player chooses Easy, Medium, or
+Hard, then the game randomly selects an opponent from that difficulty. The new
+**Selection Mode** skips the difficulty prompt and lets the player choose an
+opponent directly.
+
+The selection list is assembled from the boss lists in `Difficulty`, in Easy,
+Medium, then Hard order. It contains all 15 current bosses, numbered
+consecutively. Each entry displays the boss name, difficulty, HP, and damage.
+The player enters a list number to select that exact boss; the selected `Enemy`
+is then passed to the existing battle-start flow rather than being randomly
+drawn.
+
+The choice is checked against the list's valid number range. Non-numeric or
+out-of-range input is rejected, and no battle starts unless a valid boss was
+selected. This keeps the original random mode intact while providing a direct
+way to test against a particular boss.
