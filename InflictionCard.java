@@ -9,21 +9,21 @@ public class InflictionCard extends Card{
     @Override
     public void play(Player player, Enemy boss) {
         if (player.getMana() < getManaCost()) {
-            System.out.println("Not Enough Mana!");
+            System.out.printf("Not Enough Mana!%n");
             return;
         }
         player.spendMana(getManaCost());
         boss.applyInflictDmg(damage, inflictTurn);
-        System.out.println("Player Cast " + super.getName() + " Inflicted "  + damage + " Damage to " + boss.getName());
-        System.out.println("Inflict Duration: " + inflictTurn);
+        System.out.printf("Player Cast %s Inflicted %d Damage to %s%n", super.getName(), damage, boss.getName());
+        System.out.printf("Inflict Duration: %d%n", inflictTurn);
     }
     @Override
     public void printDetails() {
-        System.out.println("------------ INFLICTION CARD ------------");
-        System.out.println("Card: " + super.getName());
-        System.out.println("Mana Cost: " + super.getManaCost());
-        System.out.println("Damage: " + damage);
-        System.out.println("Infliction Duration: " + inflictTurn + " turns");
-        System.out.println("----------------------------------------");
+        System.out.printf("------------ INFLICTION CARD ------------%n");
+        System.out.printf("Card: %s%n", super.getName());
+        System.out.printf("Mana Cost: %d%n", super.getManaCost());
+        System.out.printf("Damage: %d%n", damage);
+        System.out.printf("Infliction Duration: %d turns%n", inflictTurn);
+        System.out.printf("----------------------------------------%n");
     }
 }

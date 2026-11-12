@@ -73,10 +73,10 @@ public class BattleEngine {
             if (turn > 1 && hand.isEmpty()) {
                 drawHand(masterDeck, 3);
             }
-            System.out.println("===== TURN: " + turn + " =====");
-            System.out.println("===== CURRENT HAND =====");
+            System.out.printf("===== TURN: %d =====", turn);
+            System.out.printf("===== CURRENT HAND =====");
             for (int i = 0; i < hand.size(); i++) {
-                System.out.println(i+1 + ".) " + hand.get(i).getName());
+                System.out.printf("%d.) %s%n", i + 1, hand.get(i).getName());
             }
             System.out.println("----------------------");
             System.out.println("'h': Check one card stats");
@@ -95,11 +95,11 @@ public class BattleEngine {
                     cards.printDetails();
                 }
             } else if(choice.equalsIgnoreCase("s")) {
-                System.out.println("---------------------");
-                System.out.println("Player | HP: " + player.getHp() + " | Mana: " + player.getMana());
-                System.out.println("---------------------");
-                System.out.println("Boss | HP: " + boss.getHp() + " | Damage: " + boss.getDamage());
-                System.out.println("---------------------");
+                System.out.printf("---------------------%n");
+                System.out.printf("Player | HP: %d | Mana: %d%n", player.getHp(), player.getMana());
+                System.out.printf("---------------------%n");
+                System.out.printf("Boss | HP: %d | Damage: %d%n", boss.getHp(), boss.getDamage());
+                System.out.printf("---------------------%n");
             }
             try{
                 int cardChoice = Integer.parseInt(choice);
