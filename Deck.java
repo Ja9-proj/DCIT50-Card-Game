@@ -40,6 +40,12 @@ public class Deck {
         cardPool.add(new DemiCard("Abyssal Judgment", 4, 25.0));
         cardPool.add(new DemiCard("Final Eclipse", 6, 35.0));
 
+        cardPool.add(new InflictionCard("Venomous Bite", 2, 5, 3));
+        cardPool.add(new InflictionCard("Burning Mark", 3, 8, 2));
+        cardPool.add(new InflictionCard("Frostbite", 2, 4, 4));
+        cardPool.add(new InflictionCard("Cursed Wound", 4, 10, 3));
+        cardPool.add(new InflictionCard("Plague Strike", 5, 12, 4));
+
     }
 
     public Card drawRandomCard() {
@@ -52,6 +58,5 @@ public class Deck {
         return cardPool.remove(randomIndex);
     }
 }
-
 
 

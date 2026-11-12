@@ -16,7 +16,7 @@ public class PhysicalCard extends Card {
             return;
         }
 
-        System.out.printf("%%s Cast %s Dealt %d to %s",player.getName(), super.getName(), damage, boss.getName());
+        System.out.printf("%s Cast %s Dealt %d to %s",player.getName(), super.getName(), damage, boss.getName());
         player.spendMana(super.getManaCost());
         boss.takeDamage(damage);
 
@@ -25,11 +25,11 @@ public class PhysicalCard extends Card {
 
     @Override
     public void printDetails() {
-        System.out.println("------------ PHYSICAL CARD ------------");
+        System.out.print("------------ PHYSICAL CARD ------------");
         System.out.printf("%nCard: %s", super.getName());
         System.out.printf("%nMana Cost: %d", super.getManaCost());
         System.out.printf("%nDamage: %d", damage);
-        System.out.println("----------------------------------------");
+        System.out.printf("%n----------------------------------------%n");
     }
 
 }
