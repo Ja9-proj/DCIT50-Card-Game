@@ -64,10 +64,13 @@ public class BattleEngine {
         pause(2000);
 
         System.out.print("----- Boss Battle Begins -----");
-        System.out.printf("%nPlayer | HP: %d | Mana: %d%n", player.getHp(), player.getMana());
+        System.out.printf("%n%s | HP: %d | Mana: %d%n",player.getName(), player.getHp(), player.getMana());
 
         while (player.getHp() > 0 && !boss.isDead()) {
-
+            if (masterDeck.getCardPool().isEmpty() && hand.isEmpty()) {
+                System.out.printf("%nNo more cards in the deck.%n");
+                break;
+            }
             if (turn > 1 && hand.isEmpty()) {
                 drawHand(masterDeck, 3);
             }
@@ -76,12 +79,17 @@ public class BattleEngine {
             for (int i = 0; i < hand.size(); i++) {
                 System.out.printf("%d.) %s%n", i + 1, hand.get(i).getName());
             }
-            System.out.println("----------------------");
+            System.out.printf("===== BATTLE STATUS ===== %n");
+            System.out.printf("%s | HP: %d | Mana: %d%n",player.getName(), player.getHp(), player.getMana());
+            System.out.printf("%s | HP: %d | Damage: %d%n",boss.getName(), boss.getHp(), boss.getDamage());
+            System.out.printf("---------------------%n");
             System.out.println("'h': Check one card stats");
             System.out.println("'a': Check all card stats");
-            System.out.println("'s': Check match status");
+            System.out.println("'e': End Turn");
+            System.out.println("----------------------");
             System.out.print("Choose a number(card) to play: ");
             String choice = inpt.nextLine();
+            boolean endTurn = false;
             if(choice.equalsIgnoreCase("h")) {
                 System.out.println("Which card to check?: ");
                 int stats = inpt.nextInt();
@@ -92,24 +100,30 @@ public class BattleEngine {
                 for(Card cards : hand) {
                     cards.printDetails();
                 }
-            } else if(choice.equalsIgnoreCase("s")) {
-                System.out.printf("---------------------%n");
-                System.out.printf("Player | HP: %d | Mana: %d%n", player.getHp(), player.getMana());
-                System.out.printf("---------------------%n");
-                System.out.printf("Boss | HP: %d | Damage: %d%n", boss.getHp(), boss.getDamage());
-                System.out.printf("---------------------%n");
             }
-            try{
+            else if (choice.equalsIgnoreCase("e")) {
+                System.out.println("You end your turn.");
+                hand.clear();
+                endTurn = true;
+            }
+                try{
                 int cardChoice = Integer.parseInt(choice);
+                endTurn = true;
                 if(cardChoice > 0 && cardChoice <= hand.size()) {
                     int card = cardChoice-1;
                     hand.get(card).play(player,boss);
                     hand.remove(card);
                 }
-                if (hand.isEmpty()) {
-                    turn++;
+            }
+            catch (NumberFormatException e) {
+                if (!choice.equalsIgnoreCase("h") && !choice.equalsIgnoreCase("a")
+                && !choice.equalsIgnoreCase("s") && !choice.equalsIgnoreCase("e")) {
+                    System.out.println("Invalid Input");
                 }
-                if (!boss.isDead() && player.getHp() > 0 && hand.isEmpty()) {
+            }
+            if (endTurn && hand.isEmpty()) {
+                turn++;
+                if (!boss.isDead() && player.getHp() > 0) {
                     boss.rageMode();
 
                     int hpBeforeAttack = player.getHp();
@@ -120,28 +134,25 @@ public class BattleEngine {
                     playerTotalDamageTaken += hpBeforeAttack - player.getHp();
                 }
             }
-            catch (NumberFormatException e) {
-                if (!choice.equalsIgnoreCase("h") && !choice.equalsIgnoreCase("a")
-                && !choice.equalsIgnoreCase("s")) {
-                    System.out.println("Invalid Input");
-                }
-            }
         }
 
             System.out.println("\n------------ BATTLE FINISHED ------------");
-            if (player.getHp() > 0 && boss.isDead()) {
-                System.out.println("~~~ PLAYER WINS ~~~");
-            } else {
-                System.out.println("~~~ PLAYER LOSE ~~~");
+            if (masterDeck.getCardPool().isEmpty()) {
+                System.out.println("~~~ INSUFFICIENT CARDS TO PULL ~~~");
             }
-            System.out.println("Player Final Status");
-            System.out.printf("HP: %d/%d | Mana: %d/%d", player.getHp(), player.getMaxHp(), player.getMana(), player.getMaxMana());
+            if (player.getHp() > 0 && boss.isDead()) {
+                System.out.printf("~~~ %s WINS ~~~%n", player.getName());
+            } else {
+                System.out.printf("~~~ %s LOSE ~~~%n", player.getName());
+            }
+            System.out.printf("%s Final Status", player.getName());
+            System.out.printf("%nHP: %d/%d | Mana: %d/%d", player.getHp(), player.getMaxHp(), player.getMana(), player.getMaxMana());
             System.out.printf("%nTotal Damage Taken: %d", playerTotalDamageTaken);
 
-            if (player.getHp() == 0 && !boss.isDead()) {
-                System.out.println("\n~~~ BOSS WINS ~~~");
+            if (player.getHp() == 0 && !boss.isDead() || masterDeck.getCardPool().isEmpty()) {
+                System.out.printf("%n~~~ %s WINS ~~~%n", boss.getName());
             } else {
-                System.out.println("\n~~~ BOSS LOSE ~~~");
+                System.out.printf("%n~~~ %s LOSE ~~~%n", boss.getName());
             }
             System.out.printf("%s Final Status", boss.getName());
             System.out.printf("%nHP: %s/%s %n", boss.getHp(), boss.getMaxHp());
