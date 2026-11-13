@@ -21,29 +21,11 @@ public class Main {
 
             switch (menu) {
                 case "1":
-                    System.out.println("====== SELECT CLASS ======");
-                    System.out.println("1. Mage     (100 HP, 12 Mana)");
-                    System.out.println("2. Wizard   (90 HP, 15 Mana)");
-                    System.out.println("3. Archmage (80 HP, 20 Mana)");
-                    System.out.print("Choose: ");
-                    String classChoice = in.nextLine().strip();
-                    CharacterClass characterClass;
-
-                    switch (classChoice) {
-                        case "1":
-                            characterClass = CharacterClass.MAGE;
-                            break;
-                        case "2":
-                            characterClass = CharacterClass.WIZARD;
-                            break;
-                        case "3":
-                            characterClass = CharacterClass.ARCHMAGE;
-                            break;
-                        default:
-                            System.out.println("Invalid Input!");
-                            return;
+                    CharacterClass characterClassSG = selectCharacter();
+                    if (characterClassSG == null) {
+                        return;
                     }
-                    hero = new Player("Player", characterClass);
+                    hero = new Player("Player", characterClassSG);
 
                     System.out.println("====== SELECT DIFFICULTY ======");
                     System.out.println("1. Easy");
@@ -71,28 +53,12 @@ public class Main {
                     }
                     break;
                 case "2":
-                    System.out.println("====== SELECT CLASS ======");
-                    System.out.println("1. Mage     (100 HP, 12 Mana)");
-                    System.out.println("2. Wizard   (90 HP, 15 Mana)");
-                    System.out.println("3. Archmage (80 HP, 20 Mana)");
-                    System.out.print("Choose: ");
-                    classChoice = in.nextLine().strip();
-
-                    switch (classChoice) {
-                        case "1":
-                            characterClass = CharacterClass.MAGE;
-                            break;
-                        case "2":
-                            characterClass = CharacterClass.WIZARD;
-                            break;
-                        case "3":
-                            characterClass = CharacterClass.ARCHMAGE;
-                            break;
-                        default:
-                            System.out.println("Invalid Input!");
-                            return;
+                    CharacterClass characterClassSM = selectCharacter();
+                    if (characterClassSM == null) {
+                        return;
                     }
-                    hero = new Player("Player", characterClass);
+
+                    hero = new Player("Player", characterClassSM);
                     boss = selectBoss();
                     break;
                 case "3":
@@ -108,6 +74,21 @@ public class Main {
                 return;
             }
             startGame(engine,hero,boss,masterDeck, in); // used a static method for player input
+    }
+    public static CharacterClass selectCharacter() {
+        System.out.println("====== SELECT CLASS ======");
+        System.out.println("1. Mage     (100 HP, 12 Mana)");
+        System.out.println("2. Wizard   (90 HP, 15 Mana)");
+        System.out.println("3. Archmage (80 HP, 20 Mana)");
+        System.out.print("Choose: ");
+        String classChoice = in.nextLine().strip();
+        switch (classChoice) {
+            case "1": return CharacterClass.MAGE;
+            case "3": return CharacterClass.ARCHMAGE;
+            case "2": return CharacterClass.WIZARD;
+            default: System.out.println("Invalid Input!");
+            return null;
+        }
     }
 
     private static Enemy selectBoss() {
