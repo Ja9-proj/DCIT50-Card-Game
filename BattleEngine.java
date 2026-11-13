@@ -51,7 +51,7 @@ public class BattleEngine {
         int playerTotalDamageTaken = 0;
         int turn = 1;
 
-        System.out.print("Searching for an oppenent");
+        System.out.print("MATCH MAKING");
 
         for (int i = 0; i < 3; i++) {
             pause(1000);
