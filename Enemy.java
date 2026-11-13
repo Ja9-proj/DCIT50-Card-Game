@@ -65,22 +65,27 @@ public class Enemy {
         if (amount < 0) {
             throw new IllegalArgumentException("Take Damage cannot be negative");
         }
+        if (amount == 0){ 
+            return;
+        } 
+
         int finalDamage = amount;
         // STAGGER METER APPLIED BONUS DAMAGE
         if (this.staggerTurns > 0) {
             this.staggerTurns = 0;
             this.staggerMeter = 0;
-            if (isDead()){
-                System.out.println("BOSS IS DEADD");
-                return;
-            }
             finalDamage = amount + this.bonusDamage;
-            System.out.println("Boss is BROKEN! Extra Damage: " + amount + " -> " + finalDamage);
-
+            System.out.println("\n=================================");
+            System.out.println("STAGGER BONUS USED! +" + bonusDamage + " damage: " + amount + " -> " + finalDamage);
+            System.out.println("The boss's stagger has been spent. Meter reset to 0/" + MaxStagger);
+            System.out.println("=================================");
             
         }
         
         takeDamage1(finalDamage);
+        if (isDead()){
+            System.out.println("\nBOSS IS DEADD");
+        }
     }
 
 
@@ -91,21 +96,19 @@ public class Enemy {
             return;
         }
 
-        if (this.skipTurn){
-            this.skipTurn = false;
-            System.out.println("BOSS IS STAGGERED/STUN CANNOT ATTACK");
 
-            if (this.staggerTurns == 0) {
-                System.out.println("=================================");
-                System.out.println("THE BOSS RECOVERS!!!");
-                System.out.println("=================================");
-            }
-            return;
-        }
+        if (this.skipTurn) {
+        this.skipTurn = false;
+        System.out.println("=================================");
+        System.out.println(name + " IS STAGGERED AND CANNOT ATTACK!");
+        System.out.println( this.name + " RECOVERS! Stagger meter: 0/" + MaxStagger);
+        System.out.println("=================================");
+        return;
+    }
 
         p.takeDamage(damage);
 
-        System.out.println(name + " Dealt " + damage + " to " + p.getName());
+        System.out.println(this.name + " Dealt " + damage + " to " + p.getName());
     }
     // ADDED INFLICTION DAMAGE FEATURE
     public void applyInflictDmg(int damage, int duration) {
@@ -136,20 +139,24 @@ public class Enemy {
     // STAGGER EXTRA METHODS
     public void endTurn(){
         if (this.staggerTurns > 0) {
-            this.skipTurn = true;
             this.staggerMeter = 0;
+            this.staggerTurns = 0;
 
-            if (isDead()){
+            if (isDead()) return;
+            if (staggerTurns == 0) {
+                System.out.println("\n=================================");
+                System.out.println("THE BOSS RECOVERS! The stagger bonus expired unused.");
                 System.out.println("=================================");
-                System.out.println("BOSS IS DEADD");
-                System.out.println("=================================");
-                return;
             }
 
         }
     }
 
     public void addStaggerPTS(int amount){
+        if (isDead()) {
+            return;
+        }
+
         if (this.staggerTurns > 0) {
             System.out.println("Boss is already staggered! Stagger points wasted.");
             return;
@@ -158,7 +165,11 @@ public class Enemy {
         // OVERFLOW HANDLER
         if (this.staggerMeter >= this.MaxStagger) {
             this.staggerMeter = this.MaxStagger;
-            System.out.println("STAGGER METER FULL!! THE BOSS IS STAGGERED!");
+            System.out.println("\n=================================");
+            System.out.println("STAGGER METER FULL: " + staggerMeter + "/" + MaxStagger);
+            System.out.println("THE BOSS IS STAGGERED!");
+            System.out.println("Your next damaging card deals +" + bonusDamage + " bonus damage!");
+            System.out.println("=================================");
             this.skipTurn = true;
             this.staggerTurns = 1;
         }
