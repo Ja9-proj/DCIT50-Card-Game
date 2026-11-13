@@ -137,6 +137,7 @@ public class BattleEngine {
                     boss.isInflicted();
                     boss.rageMode();
                     if (!boss.isDead()) {
+                        boss.endTurn();
                         boss.attack(player);
                     }
                     playerTotalDamageTaken += hpBeforeAttack - player.getHp();
